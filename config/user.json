@@ -1,0 +1,6 @@
+{
+    "bobby": {
+      "pull": "github",
+      "push": "email"
+    }
+}
