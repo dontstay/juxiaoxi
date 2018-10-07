@@ -16,7 +16,7 @@ def import_class(import_str):
 
 def write_content_to_file(content, file_path):
     if os.path.isfile(file_path):
-        with open(file_path, 'a+') as md:
-            md.writelines(content)
+        with open(file_path, 'ab+') as md:
+            md.write(content)
     else:
         raise Exception("%s is not file." % file_path)
