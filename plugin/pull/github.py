@@ -64,6 +64,6 @@ class GitHubPlugin(base.PullPlugin):
         for cont in content:
             t = cont.to_dict()
             for key in cont.all_keys:
-                result += "%s: %s \r\n" % (key, t.get(key, ''))
-            result += "================================================= \r\n"
+                result += "%s: %s \n" % (key, t.get(key, ''))
+            result += "================================================= \n"
         return result
