@@ -61,7 +61,7 @@ class GitHubPlugin(base.PullPlugin):
             for key in cont.all_keys:
                 if key == 'name':
                     result += "# %s \n" % t.get(key, '')
-                elif key in ['url']:
+                elif key in ['html_url']:
                     result += "- **%s**: %s \n" % (key, t.get(key, ''))
                 else:
                     result += "- **%s**: `%s` \n" % (key, t.get(key, ''))
