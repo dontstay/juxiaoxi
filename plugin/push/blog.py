@@ -1,6 +1,8 @@
+from datetime import date
 import os
 
 import base
+from common import utils
 
 """
 1.blog environment must install node js, https://hexo.io/zh-cn/docs/index.html
@@ -16,7 +18,13 @@ import base
 
 class BlogPlugin(base.PushPlugin):
 
-    def __call__(self, *args, **kwargs):
+    def __call__(self, data, *args, **kwargs):
         os.system("cd /root/dontstay; hexo new github_python_projects")
+        d = date.today()
+        try:
+            utils.write_content_to_file(data, "/root/dontstay/source/_posts/"+str(d.isoformat())+"-github-python-projects.md")
+        except Exception as ex:
+            print "%s" % ex
+            return
         os.system("cd /root/dontstay; hexo generate ")
         os.system("cd /root/dontstay; hexo deploy ")

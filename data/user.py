@@ -1,6 +1,6 @@
-{
+users = {
     "bobby": {
       "pull": "github",
-      "push": "email"
+      "push": "blog"
     }
 }
