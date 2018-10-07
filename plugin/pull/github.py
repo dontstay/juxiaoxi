@@ -5,15 +5,12 @@ import base
 
 class GitHubRepo(object):
     all_keys = ['name',
-                'full_name',
                 'language',
-                'created_at',
-                'stargazers_count',
                 'forks',
                 'watchers',
+                'created_at',
                 'description',
-                'url',
-                'homepage',
+                'html_url'
                 ]
 
     def __init__(self):
@@ -64,7 +61,7 @@ class GitHubPlugin(base.PullPlugin):
             for key in cont.all_keys:
                 if key == 'name':
                     result += "# %s \n" % t.get(key, '')
-                elif key in ['url', 'homepage']:
+                elif key in ['url']:
                     result += "- **%s**: %s \n" % (key, t.get(key, ''))
                 else:
                     result += "- **%s**: `%s` \n" % (key, t.get(key, ''))

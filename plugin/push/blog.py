@@ -19,10 +19,10 @@ from common import utils
 class BlogPlugin(base.PushPlugin):
 
     def __call__(self, data, *args, **kwargs):
-        os.system("cd /root/dontstay; hexo new github_python_projects")
+        os.system("cd /root/dontstay; hexo new github_top_stared_python_projects")
         d = date.today()
         try:
-            utils.write_content_to_file(data, "/root/dontstay/source/_posts/"+str(d.isoformat())+"-github-python-projects.md")
+            utils.write_content_to_file(data, "/root/dontstay/source/_posts/"+str(d.isoformat())+"-github-top-stared-python-projects.md")
         except Exception as ex:
             print "%s" % ex
             return
