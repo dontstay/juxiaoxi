@@ -17,7 +17,7 @@ def import_class(import_str):
                            traceback.format_exception(*sys.exc_info())))
 
 
-def write_content_to_file(content, file_path, mode='ab'):
+def write_content_to_file(content, file_path, mode='wb+'):
     if os.path.isfile(file_path):
         with codecs.open(file_path, mode, 'utf-8') as md:
             md.write(content)
