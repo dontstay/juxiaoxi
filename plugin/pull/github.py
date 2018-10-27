@@ -55,14 +55,14 @@ class GitHubPlugin(base.PullPlugin):
             print 'get github repositories error.'
 
     def format_content(self, content):
-        result = ""
+        result = u"---\nlayout: post\ntitle: github python TOP 10 热门项目\ndescription: github python TOP 10 热门项目\ncategory: github\n---\n"
         for cont in content:
             t = cont.to_dict()
             for key in cont.all_keys:
                 if key == 'name':
-                    result += "# %s \n" % t.get(key, '')
+                    result += "## %s \n" % t.get(key, '')
                 elif key in ['html_url']:
-                    result += "- **%s**: %s \n" % (key, t.get(key, ''))
+                    result += "- **%s**: [%s](%s) \n\n" % (key, t.get(key, ''), t.get(key, ''))
                 else:
                     result += "- **%s**: `%s` \n" % (key, t.get(key, ''))
         return result
