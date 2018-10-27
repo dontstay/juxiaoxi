@@ -18,8 +18,5 @@ def import_class(import_str):
 
 
 def write_content_to_file(content, file_path, mode='wb+'):
-    if os.path.isfile(file_path):
-        with codecs.open(file_path, mode, 'utf-8') as md:
-            md.write(content)
-    else:
-        raise Exception("%s is not file." % file_path)
+    with codecs.open(file_path, mode, 'utf-8') as md:
+        md.write(content)
