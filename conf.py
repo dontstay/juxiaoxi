@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
 from config import pull_plugins
 from config import push_plugins
 
