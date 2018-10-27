@@ -17,9 +17,9 @@ def import_class(import_str):
                            traceback.format_exception(*sys.exc_info())))
 
 
-def write_content_to_file(content, file_path):
+def write_content_to_file(content, file_path, mode='ab'):
     if os.path.isfile(file_path):
-        with codecs.open(file_path, 'ab+', 'utf-8') as md:
+        with codecs.open(file_path, mode, 'utf-8') as md:
             md.write(content)
     else:
         raise Exception("%s is not file." % file_path)
