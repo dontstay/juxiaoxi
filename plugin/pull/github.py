@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
+from datetime import date
 import requests
 
 import base
@@ -57,7 +58,9 @@ class GitHubPlugin(base.PullPlugin):
             print 'get github repositories error.'
 
     def format_content(self, content):
-        result = u"---\nlayout: post\ntitle: github python TOP 10 热门项目\ndescription: github python TOP 10 热门项目\ncategory: github\n---\n"
+        d = date.today()
+        title = str(d.year) + u"年" + str(d.month) + u"月 python TOP10 项目"
+        result = u"---\nlayout: post\ntitle: "+title+"\ndescription: "+title+"\ncategory: github\n---\n"
         for cont in content:
             t = cont.to_dict()
             for key in cont.all_keys:
