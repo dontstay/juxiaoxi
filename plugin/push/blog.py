@@ -13,6 +13,7 @@ class BlogPlugin(base.PushPlugin):
         d = date.today()
         try:
             print "write file..."
+            os.system("cd /root/dontstay.github.io; git pull ")
             utils.write_content_to_file(data, "/root/dontstay.github.io/_posts/github/"+str(d.isoformat())+"-github-top-stared-python-projects.md")
         except Exception as ex:
             print "%s" % ex
