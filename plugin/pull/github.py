@@ -69,5 +69,5 @@ class GitHubPlugin(base.PullPlugin):
                 elif key in ['html_url']:
                     result += "- **%s**: [%s](%s) \n\n" % (key, t.get(key, ''), t.get(key, ''))
                 else:
-                    result += "- **%s**: `%s` \n" % (key, t.get(key, ''))
+                    result += "- **%s**: %s \n" % (key, t.get(key, ''))
         return result
