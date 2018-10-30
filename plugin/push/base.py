@@ -1,5 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
+
+
 class PushPlugin(object):
 
     def __int__(self):

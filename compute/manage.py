@@ -5,24 +5,41 @@ from common import utils
 
 
 def go(users):
+    # get all plugins
+    plugins = {}
+    for usr in users:
+        for pull in users[usr]['pull'].split(','):
+            plugins[pull] = users[usr]['push'].split(',')
+    # prepare all data
+    pull_contents = {}
+    for pull, pushs in plugins.items():
+        pull_key = 'pull.' + pull
+        print pull_key
+        pull_contents[pull_key] = {'content': None}
+        pull_class = CONF.get(pull_key, None)
+        print pull_class
+        if pull_class:
+            pull_class_obj = utils.import_class(pull_class)
+            pull_clazz = pull_class_obj()
+            pull_content = pull_clazz()
+            pull_contents[pull_key]['content'] = pull_content
+            if pushs:
+                for push in pushs:
+                    push_key = 'push.' + push
+                    to_method = getattr(pull_content, "to_"+push)
+                    pull_contents[pull_key][push_key] = to_method()
+    if not pull_contents:
+        print "get empty content."
+        return
+    # push all data
     for usr in users:
         print usr
         user_pull = users[usr]['pull'].split(',')
-        pull_content = {}
-        if user_pull:
+        user_push = users[usr]['push'].split(',')
+        if user_pull and user_push:
             for pull in user_pull:
                 pull_key = 'pull.' + pull
                 print pull_key
-                pull_class = CONF.get(pull_key, None)
-                print pull_class
-                if pull_class:
-                    pull_class_obj = utils.import_class(pull_class)
-                    pull_clazz = pull_class_obj()
-                    pull_result = pull_clazz()
-                    pull_content[pull_key] = pull_result
-        user_push = users[usr]['push'].split(',')
-        if pull_content and user_push:
-            for pull_key in pull_content:
                 for push in user_push:
                     push_key = 'push.' + push
                     print push_key
@@ -31,4 +48,4 @@ def go(users):
                     if push_class:
                         push_class_obj = utils.import_class(push_class)
                         push_clazz = push_class_obj()
-                        push_clazz(pull_content[pull_key])
+                        push_clazz(pull_contents[pull_key][push_key])
