@@ -14,7 +14,7 @@ class GitHubPlugin(base.PullPlugin):
     all_keys = {
         "python_stared": {
             "url": "language:python&sort=stars&order=desc&page=1&per_page=20",
-            "title": str(d.year) + u"年" + str(d.month) + u"月 python TOP20 项目",
+            "title": str(d.year) + u"年" + str(d.month) + u"月" + str(d.day) + u"日 github python TOP20 项目",
             "category": "sites",
             "blog_name": "github-top-stared-python-projects",
             "content": []

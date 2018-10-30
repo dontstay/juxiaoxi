@@ -10,15 +10,28 @@ d = date.today()
 
 
 class RssPlugin(base.PullPlugin):
-
     all_keys = {
         "cnblog_picked": {
             "url": "http://feed.cnblogs.com/blog/picked/rss",
-            "title": str(d.year) + u"年" + str(d.month) + u"月 博客园 精华区",
+            "title": str(d.year) + u"年" + str(d.month) + u"月" + str(d.day) + u"日 博客园 精华区",
             "category": "blogs",
             "blog_name": "cnblog-picked-rss",
             "content": []
-        }
+        },
+        "cnblog_python": {
+            "url": "http://feed.cnblogs.com/blog/sitecateogry/python/rss",
+            "title": str(d.year) + u"年" + str(d.month) + u"月" + str(d.day) + u"日 博客园 python区",
+            "category": "blogs",
+            "blog_name": "cnblog-python-rss",
+            "content": []
+        },
+        "cnblog_linux": {
+            "url": "http://feed.cnblogs.com/blog/sitecateogry/linux/rss",
+            "title": str(d.year) + u"年" + str(d.month) + u"月" + str(d.day) + u"日 博客园 linux区",
+            "category": "blogs",
+            "blog_name": "cnblog-linux-rss",
+            "content": []
+        },
     }
 
     def __call__(self, key, *args, **kwargs):

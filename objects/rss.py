@@ -23,8 +23,8 @@ class RssContent(object):
         for cont in self.config['content']:
             t = cont.to_dict()
             body += u"## [%s](%s) \n" % (t.get('title', ''), t.get('url', ''))
-            body += u"作者： [%s](%s) 发表于：%s \n\n" % (t.get('author_name', ''), t.get('author_uri', ''), t.get('published', ''))
-            body += u"%s \n\n" % t.get('content', '')
+            body += u"作者： [%s](%s)      发表于：%s \n\n" % (t.get('author_name', ''), t.get('author_uri', ''), t.get('published', ''))
+            body += u"%s \n\n\n" % t.get('content', '')
         b = blog.BlogContent()
         b.title = self.config['title']
         b.category = self.config['category']
