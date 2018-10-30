@@ -40,7 +40,7 @@ class GithubRepoContent(object):
     def to_blog(self):
         d = date.today()
         title = str(d.year) + u"年" + str(d.month) + u"月 python TOP10 项目"
-        category = "github"
+        category = "sites"
         body = u"---\nlayout: post\ntitle: " + title + "\ndescription: " + title + "\ncategory: " + category + "\n---\n"
         for cont in self.content:
             t = cont.to_dict()
