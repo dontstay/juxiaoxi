@@ -29,8 +29,8 @@ def go(users):
                 pull_content = pull_clazz(pull_plugin_key)
                 pull_contents[pull_key][pull_plugin_key] = {}
                 pull_contents[pull_key][pull_plugin_key]['content'] = pull_content
-                if pushs and len(pushs) > 0:
-                    for push in pushs:
+                for push in pushs:
+                    if push:
                         push_key = 'push.' + push
                         print "push_key: ", push_key
                         to_method = getattr(pull_content, "to_"+push)
