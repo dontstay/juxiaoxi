@@ -1,0 +1,42 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+from datetime import date
+import feedparser
+
+from objects import rss
+import base
+
+d = date.today()
+
+
+class RssPlugin(base.PullPlugin):
+
+    all_keys = {
+        "cnblog_picked": {
+            "url": "http://feed.cnblogs.com/blog/picked/rss",
+            "title": str(d.year) + u"年" + str(d.month) + u"月 博客园 精华区",
+            "category": "blogs",
+            "blog_name": "cnblog-picked-rss",
+            "content": []
+        }
+    }
+
+    def __call__(self, key, *args, **kwargs):
+        content = self.get_rss_content(key)
+        return content
+
+    def get_rss_content(self, key):
+        rss_contents = []
+        feed = self.get_rss_body(self.all_keys[key]['url'])
+        for entry in feed.entries:
+            rs = rss.Rss()
+            rs.url = entry.id
+            rs.title = entry.title
+            rss_contents.append(rs)
+        self.all_keys[key]['content'] = rss_contents
+        rss_content = rss.RssContent(self.all_keys[key])
+        return rss_content
+
+    def get_rss_body(self, rss_url):
+        body = feedparser.parse(rss_url)
+        return body

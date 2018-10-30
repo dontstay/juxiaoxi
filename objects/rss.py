@@ -4,14 +4,14 @@ from objects import base
 import blog
 
 
-class GitHubRepo(base.BaseObject):
+class Rss(base.BaseObject):
 
     def __init__(self):
-        self.all_keys = ['name', 'language', 'forks', 'watchers', 'created_at', 'description', 'html_url']
-        super(GitHubRepo, self).__init__()
+        self.all_keys = ['url', 'title']
+        super(Rss, self).__init__()
 
 
-class GithubRepoContent(object):
+class RssContent(object):
 
     def __init__(self, config):
         self.config = config
@@ -21,13 +21,7 @@ class GithubRepoContent(object):
             'title'] + "\ncategory: " + self.config['category'] + "\n---\n"
         for cont in self.config['content']:
             t = cont.to_dict()
-            for key in cont.all_keys:
-                if key == 'name':
-                    body += "## %s \n" % t.get(key, '')
-                elif key in ['html_url']:
-                    body += "- **%s**: [%s](%s) \n\n" % (key, t.get(key, ''), t.get(key, ''))
-                else:
-                    body += "- **%s**: %s \n" % (key, t.get(key, ''))
+            body += "## [%s](%s)" % (t.get('title', ''), t.get('url', ''))
         b = blog.BlogContent()
         b.title = self.config['title']
         b.category = self.config['category']

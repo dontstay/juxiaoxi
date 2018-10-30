@@ -8,44 +8,47 @@ def go(users):
     # get all plugins
     plugins = {}
     for usr in users:
-        for pull in users[usr]['pull'].split(','):
+        for pull in users[usr]['pull']:
             plugins[pull] = users[usr]['push'].split(',')
     # prepare all data
     pull_contents = {}
     for pull, pushs in plugins.items():
         pull_key = 'pull.' + pull
         print pull_key
-        pull_contents[pull_key] = {'content': None}
+        pull_contents[pull_key] = {}
         pull_class = CONF.get(pull_key, None)
         print pull_class
         if pull_class:
             pull_class_obj = utils.import_class(pull_class)
             pull_clazz = pull_class_obj()
-            pull_content = pull_clazz()
-            pull_contents[pull_key]['content'] = pull_content
-            if pushs:
-                for push in pushs:
-                    push_key = 'push.' + push
-                    to_method = getattr(pull_content, "to_"+push)
-                    pull_contents[pull_key][push_key] = to_method()
+            for pull_plugin_key in pull_clazz.all_keys:
+                pull_content = pull_clazz(pull_plugin_key)
+                pull_contents[pull_key][pull_plugin_key] = {}
+                pull_contents[pull_key][pull_plugin_key]['content'] = pull_content
+                if pushs:
+                    for push in pushs:
+                        push_key = 'push.' + push
+                        to_method = getattr(pull_content, "to_"+push)
+                        pull_contents[pull_key][pull_plugin_key][push_key] = to_method()
     if not pull_contents:
         print "get empty content."
         return
     # push all data
     for usr in users:
         print usr
-        user_pull = users[usr]['pull'].split(',')
+        user_pull = users[usr]['pull'].keys()
         user_push = users[usr]['push'].split(',')
         if user_pull and user_push:
             for pull in user_pull:
                 pull_key = 'pull.' + pull
                 print pull_key
-                for push in user_push:
-                    push_key = 'push.' + push
-                    print push_key
-                    push_class = CONF.get(push_key, None)
-                    print push_class
-                    if push_class:
-                        push_class_obj = utils.import_class(push_class)
-                        push_clazz = push_class_obj()
-                        push_clazz(pull_contents[pull_key][push_key])
+                for plugin_key in users[usr]['pull'][pull]:
+                    for push in user_push:
+                        push_key = 'push.' + push
+                        print push_key
+                        push_class = CONF.get(push_key, None)
+                        print push_class
+                        if push_class:
+                            push_class_obj = utils.import_class(push_class)
+                            push_clazz = push_class_obj()
+                            push_clazz(pull_contents[pull_key][plugin_key][push_key])

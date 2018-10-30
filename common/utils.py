@@ -1,9 +1,9 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-import os
+import codecs
+import requests
 import sys
 import traceback
-import codecs
 
 
 def import_class(import_str):
@@ -20,3 +20,12 @@ def import_class(import_str):
 def write_content_to_file(content, file_path, mode='wb+'):
     with codecs.open(file_path, mode, 'utf-8') as md:
         md.write(content)
+
+
+def get_content_by_url(url):
+    r = requests.get(url)
+    if r.status_code == 200:
+        print 'get %s success.' % url
+        return r.json()
+    else:
+        print 'get %s error.' % url

@@ -1,35 +1,43 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-import requests
+from datetime import date
 
 import base
+from common import utils
 from objects import github
+
+d = date.today()
 
 
 class GitHubPlugin(base.PullPlugin):
 
-    def __call__(self, *args, **kwargs):
-        content = self.get_github_repo_content()
+    all_keys = {
+        "python_stared": {
+            "url": "language:python&sort=stars&order=desc&page=1&per_page=20",
+            "title": str(d.year) + u"年" + str(d.month) + u"月 python TOP20 项目",
+            "category": "sites",
+            "blog_name": "github-top-stared-python-projects",
+            "content": []
+        }
+    }
+
+    def __call__(self, key, *args, **kwargs):
+        content = self.get_github_repo_content(key)
         return content
 
-    def get_github_repo_content(self):
+    def get_github_repo_content(self, key):
         github_repositories = []
-        results = self.get_github_repos()
+        results = self.get_github_repos(self.all_keys[key]['url'])
         if results and results.get("items", None):
             for item in results['items']:
                 g = github.GitHubRepo()
                 g.from_dict(item)
                 github_repositories.append(g)
-        repo_content = github.GithubRepoContent(github_repositories)
+        self.all_keys[key]['content'] = github_repositories
+        repo_content = github.GithubRepoContent(self.all_keys[key])
         return repo_content
 
-    def get_github_repos(self, language='python', sort='stars', order='desc', page='1', per_page='10'):
-        # get python top 10 stared repositories
-        base_url = 'https://api.github.com/search/repositories'
-        params_url = '?q=language:%s&sort=%s&order=%s&page=%s&per_page=%s' % (language, sort, order, page, per_page)
-        r = requests.get(base_url + params_url)
-        if r.status_code == 200:
-            print 'get github repositories success.'
-            return r.json()
-        else:
-            print 'get github repositories error.'
+    def get_github_repos(self, params_url):
+        base_url = 'https://api.github.com/search/repositories?q='
+        body = utils.get_content_by_url(base_url + params_url)
+        return body
