@@ -3,7 +3,7 @@
 
 
 class BaseContent(object):
-    base_keys = ['title', 'body']
+    base_keys = ['title', 'body', 'category']
     extend_keys = []
 
     def __init__(self):
