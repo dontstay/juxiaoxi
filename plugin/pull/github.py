@@ -27,6 +27,7 @@ class GitHubPlugin(base.PullPlugin):
 
     def get_github_repo_content(self, key):
         github_repositories = []
+        print "get github data..."
         results = self.get_github_repos(self.all_keys[key]['url'])
         if results and results.get("items", None):
             for item in results['items']:

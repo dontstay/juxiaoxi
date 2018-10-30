@@ -27,11 +27,16 @@ class RssPlugin(base.PullPlugin):
 
     def get_rss_content(self, key):
         rss_contents = []
+        print "get rss content..."
         feed = self.get_rss_body(self.all_keys[key]['url'])
         for entry in feed.entries:
             rs = rss.Rss()
             rs.url = entry.id
             rs.title = entry.title
+            rs.author_name = entry.authors[0]['name']
+            rs.author_uri = entry.authors[0]['href']
+            rs.published = entry.published
+            rs.content = entry.content[0]['value']
             rss_contents.append(rs)
         self.all_keys[key]['content'] = rss_contents
         rss_content = rss.RssContent(self.all_keys[key])

@@ -17,6 +17,7 @@ class GithubRepoContent(object):
         self.config = config
 
     def to_blog(self):
+        print "format content to blog..."
         body = u"---\nlayout: post\ntitle: " + self.config['title'] + "\ndescription: " + self.config[
             'title'] + "\ncategory: " + self.config['category'] + "\n---\n"
         for cont in self.config['content']:
